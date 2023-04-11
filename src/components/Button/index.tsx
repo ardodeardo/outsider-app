@@ -1,0 +1,50 @@
+import React from 'react'
+import Link from 'next/link';
+
+interface button {
+  type: string;
+  size: string;
+  children: React.ReactNode;
+  hrefTo?: string;
+  action?: any;
+}
+
+function Button(props: button) {
+
+  const { type, size, children, hrefTo, action } = props;
+
+  const setStyle = (type: string) => {
+    let buttonType: string = "";
+
+    switch (type) {
+      case 'primary':
+        buttonType = "py-2 px-5 text-white bg-blue-primary rounded-3xl text-base";
+        break;
+
+      default:
+        buttonType = "py-2 px-5 text-white bg-blue-primary rounded-3xl text-base";
+        break;
+    }
+
+    return buttonType;
+  }
+
+  const render = () => {
+    return (
+      hrefTo && hrefTo.length > 0 ?
+        <Link href={hrefTo}>
+          <button className={setStyle(type)}>{props.children}</button>
+        </Link>
+        :
+        <button className={setStyle(type)} onClick={ () => action() }>{props.children}</button>
+    )
+  }
+
+  return (
+    <>
+      {render()}
+    </>
+  )
+}
+
+export default Button

@@ -1,0 +1,23 @@
+// .container {
+//   &__mobile-fit {
+//     @screen md {
+//       width: 360px;
+//       height: 100vh;
+//       overflow-y: auto;
+
+//       @apply mx-auto bg-white;
+//     }
+//   }
+// }
+
+#__next { 
+  @apply dark:bg-black;
+
+  @screen md {
+    width: 360px;
+    height: 100vh;
+    overflow-y: auto;
+
+    @apply mx-auto bg-white;
+  }
+}

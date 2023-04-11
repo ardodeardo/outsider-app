@@ -1,0 +1,9 @@
+.next-error-h1 {
+  @apply dark:text-white dark:border-r-white;
+
+  + div {
+    h2 {
+      @apply dark:text-white;
+    }
+  }
+}

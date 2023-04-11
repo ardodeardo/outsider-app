@@ -1,0 +1,11 @@
+.sidebar {
+  &__container {
+    @apply w-full h-screen bg-white dark:bg-black fixed top-0 left-1/2 transform -translate-x-1/2 z-50;
+
+    @screen md {
+      width: 360px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+  }
+}
