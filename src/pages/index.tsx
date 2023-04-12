@@ -5,9 +5,80 @@ import CardHeadline from "@/components/CardHeadline";
 import CardCompact from "@/components/CardCompact";
 import FeedHeadline from "@/components/FeedHeadline";
 
-export default function Home() {
+import { PATH, API_KEY } from "@/constants";
+import { Data, Article } from "@/interfaces";
+import { filterTitle } from "@/helper";
+
+interface Home {
+  data: Data;
+}
+
+function Home({ data }: Home) {
+  const articleList: Array<Article> = data.articles;
+
+  const renderKV = () => {
+    // news #1
+    const { source, urlToImage, title, url } = articleList[0];
+
+    const compiledTitle = filterTitle(source.name, title);
+
+    return (
+      <CardHeadline
+        media={source.name}
+        image={PATH.staticImage.concat(urlToImage)}
+        title={compiledTitle}
+        url={url}
+      />)
+  }
+
+  const renderFollowingHeadlines = () => {
+    // news #2 - #5
+    const topFour = articleList.slice(1, 5);
+
+    const posts = topFour.map(post => {
+      const { source, urlToImage, title, description, url } = post;
+
+      const compiledTitle = filterTitle(source.name, title);
+
+      return (
+        <CardCompact
+          key={title}
+          media={source.name}
+          image={PATH.staticImage.concat(urlToImage)}
+          title={compiledTitle}
+          description={description}
+          url={url}
+        ></CardCompact>
+      )
+    })
+
+    return posts;
+  }
+
+  const renderFeaturingHeadlines = () => {
+    // news #6 - #10
+    const topFour = articleList.slice(5);
+
+    const posts = topFour.map(post => {
+      const { source, title, url } = post;
+
+      const compiledTitle = filterTitle(source.name, title);
+
+      return (
+        <FeedHeadline
+          key={title}
+          media={source.name}
+          title={compiledTitle}
+          url={url}
+        ></FeedHeadline>
+      )
+    })
+
+    return posts;
+  }
+
   return (
-    <Layout pageTitle="outsider">
+    <Layout pageTitle="Outsider">
       <section>
         <Category></Category>
       </section>
@@ -16,12 +87,7 @@ export default function Home() {
         <div className='px-5'>
           <p className="text-lg font-bold">Top Headlines</p>
           <div className="mt-4">
-            <CardHeadline
-              media="Bloomberg"
-              image="/images/svb4x3.jpg"
-              title="Silicon Valley Bank Collapse Threatens VC Industry With $500B Markdown"
-              url="https://www.figma.com/@ardodeardo"
-            />
+            {renderKV()}
           </div>
         </div>
       </section>
@@ -35,20 +101,7 @@ export default function Home() {
       <section className="mt-6">
         <div className='px-5'>
           <div className="grid grid-cols-1 gap-y-6">
-            <CardCompact
-              media="Reuters"
-              image=""
-              title="Big Tech is making its stuff slower and stupider — on purpose"
-              description={`Google, Amazon, and Meta are making their core products worse — on purpose. The user's experience has become subordinate`}
-              url="https://www.figma.com/@ardodeardo"
-            ></CardCompact>
-            <CardCompact
-              media="Reuters"
-              image=""
-              title="Big Tech is making its stuff slower and stupider — on purpose"
-              description={`Google, Amazon, and Meta are making their core products worse — on purpose. The user's experience has become subordinate`}
-              url="https://www.figma.com/@ardodeardo"
-            ></CardCompact>
+            {renderFollowingHeadlines()}
           </div>
         </div>
       </section>
@@ -63,16 +116,7 @@ export default function Home() {
         <div className='px-5'>
           <p className="text-lg font-bold">Featuring Headlines</p>
           <div className="grid grid-cols-1 gap-y-4 mt-6">
-            <FeedHeadline
-              media="Axios"
-              title="Top Fed official: Silicon Valley Bank mismanagement led to failure"
-              url="https://www.figma.com/@ardodeardo"
-            ></FeedHeadline>
-            <FeedHeadline
-              media="Axios"
-              title="Top Fed official: Silicon Valley Bank mismanagement led to failure"
-              url="https://www.figma.com/@ardodeardo"
-            ></FeedHeadline>
+            {renderFeaturingHeadlines()}
           </div>
 
         </div>
@@ -80,3 +124,34 @@ export default function Home() {
     </Layout>
   )
 }
+
+// export async function getStaticProps() {
+export async function getServerSideProps() {
+  try {
+    // can't mix sources param with the country or category params.
+    const queries = {
+      country: "us",
+      category: "",
+      sources: "",
+      q: "",
+      pageSize: 10,
+      page: 1
+    }
+
+    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=${queries.country}&category=${queries.category}&sources=${queries.sources}&q=${queries.q}&pageSize=${queries.pageSize}&page=${queries.page}&apiKey=${API_KEY}`, {
+      method: "GET"
+    });
+
+    const data = await response.json();
+
+    return {
+      props: { data },
+      // revalidate: 60 * 15
+    }
+  } catch (error) {
+    console.log(`error`, error)
+  }
+
+}
+
+export default Home

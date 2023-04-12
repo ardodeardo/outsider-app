@@ -1,8 +1,10 @@
 import React from 'react'
 import Link from 'next/link';
 
+import { CONTENT } from '@/constants';
+
 function Category() {
-  const categories: Array<string> = ['Business', 'Entertainment', 'General', 'Health', 'Science', 'Sports', 'Technology'];
+  const categories: Array<string> = CONTENT.categories;
 
   return (
     <div className="mt-5">

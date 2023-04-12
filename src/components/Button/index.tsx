@@ -10,7 +10,6 @@ interface button {
 }
 
 function Button(props: button) {
-
   const { type, size, children, hrefTo, action } = props;
 
   const setStyle = (type: string) => {

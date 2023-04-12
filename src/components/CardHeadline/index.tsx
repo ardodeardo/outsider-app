@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Image from 'next/image'
 import Link from 'next/link'
+import ImageWithFallback from '../Image';
 
 interface cardHeadline {
   media: string;
@@ -15,12 +15,12 @@ function CardHeadline(props: cardHeadline) {
   const { media, image, title, url } = props;
 
   return (
-    <Link href={url}>
+    <Link href={url} target='_blank'>
       <div className='w-full'>
-        <label htmlFor={media} className="text-sm font-bold text-blue-primary">{media}</label>
+        <label htmlFor={media} className="text-sm font-bold text-blue-primary dark:text-blue-secondary">{media}</label>
         <h1 className='text__3x-large mt-2 hover:underline underline-offset-2'>{title}</h1>
         <div className="aspect-w-4 aspect-h-3 mt-2">
-          <Image
+          <ImageWithFallback
             src={image}
             alt={title}
             className='w-full h-full object-center object-cover'

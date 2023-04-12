@@ -39,7 +39,7 @@ export default function UiKit() {
         <div className='px-5'>
           <CardCompact
             media="Reuters"
-            image=""
+            image="/images/bigtech4x3.jpg"
             title="Big Tech is making its stuff slower and stupider — on purpose"
             description={`Google, Amazon, and Meta are making their core products worse — on purpose. The user's experience has become subordinate`}
             url="https://www.figma.com/@ardodeardo"
@@ -51,7 +51,7 @@ export default function UiKit() {
         <div className='px-5'>
           <CardSearch
             media="Reuters"
-            image=""
+            image="/images/tiktok4x3.jpg"
             title="Why TikTok is taking months to delete personal US user data from servers outside its Project Texas firewalls, even as its political standing sours"
             date="Feb 26, 2023, 16.32 PM"
             url="https://www.figma.com/@ardodeardo"

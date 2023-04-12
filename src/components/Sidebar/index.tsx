@@ -3,15 +3,15 @@ import Link from 'next/link';
 
 import { BsXLg } from "react-icons/bs";
 import SearchBox from '../SearchBox';
+import { CONTENT } from '@/constants';
+
 
 interface sidebar {
   toggleSidebar: any
 }
 
 function SideBar(props: sidebar) {
-
-  const categories: Array<string> = ['Business', 'Entertainment', 'General', 'Health', 'Science', 'Sports', 'Technology'];
-
+  const categories: Array<string> = CONTENT.categories;
   const { toggleSidebar } = props;
 
   return (
@@ -32,7 +32,7 @@ function SideBar(props: sidebar) {
             {
               categories.map(item => {
                 return <li key={item} className="text-xl font-bold tracking-widest uppercase hover:underline underline-offset-8">
-                  <Link href={`/${item.toLocaleLowerCase()}`}>{item}</Link>
+                  <Link href={`/category/${item.toLocaleLowerCase()}`} onClick={() => setTimeout(() => toggleSidebar(), 500)}>{item}</Link>
                 </li>
               })
             }
