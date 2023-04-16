@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import ImageWithFallback from '../Image';
 
-interface cardCompact {
+interface CardCompact {
   media: string;
   image: string;
   title: string;
@@ -12,7 +12,7 @@ interface cardCompact {
   url: string;
 }
 
-function CardCompact(props: cardCompact) {
+function CardCompact(props: CardCompact) {
 
   const { media, image, title, description, date, url } = props;
 

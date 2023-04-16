@@ -22,7 +22,10 @@ function Category({ data }: Category) {
     setPosts(data.articles);
   }, [])
 
-
+  useEffect(() => {
+    setPosts(data.articles);
+  }, [data])
+  
   const renderNews = () => {
     const news = posts.map(post => {
       const { source, urlToImage, title, description, url } = post;
@@ -46,9 +49,9 @@ function Category({ data }: Category) {
 
   return (
     <Layout pageTitle={`Outsider - ${name}`}>
-      <section className='mt-10'>
+      <section className='mt-8'>
         <div className='px-5'>
-          <h1 className='text-2xl text-blue-primary dark:text-blue-secondary tracking-widest font-bold uppercase'>{name}</h1>
+          <h1 className='text-xl text-blue-primary dark:text-blue-secondary tracking-widest font-bold uppercase'>{name}</h1>
         </div>
       </section>
 

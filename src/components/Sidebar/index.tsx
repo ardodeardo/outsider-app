@@ -6,11 +6,11 @@ import SearchBox from '../SearchBox';
 import { CONTENT } from '@/constants';
 
 
-interface sidebar {
+interface Sidebar {
   toggleSidebar: any
 }
 
-function SideBar(props: sidebar) {
+function SideBar(props: Sidebar) {
   const categories: Array<string> = CONTENT.categories;
   const { toggleSidebar } = props;
 

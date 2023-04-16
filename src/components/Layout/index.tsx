@@ -14,12 +14,12 @@ const lato = Lato({
 
 const SideBar = dynamic(() => import('@/components/Sidebar'), { suspense: true });
 
-interface layout {
+interface Layout {
   pageTitle: string;
   children: React.ReactNode;
 }
 
-function Layout(props: layout) {
+function Layout(props: Layout) {
   const [sidebarActive, setSidebarActive] = useState<boolean>(false);
   const { pageTitle, children } = props;
 
@@ -38,7 +38,7 @@ function Layout(props: layout) {
 
       <Header toggleSidebar={handleSidebar}></Header>
 
-      <main className='relative'>
+      <main className='relative bg-white dark:bg-black'>
         {
           sidebarActive &&
           <Suspense fallback={<></>}>

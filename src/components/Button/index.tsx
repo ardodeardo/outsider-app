@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
 
-interface button {
+interface Button {
   type: string;
   size: string;
   children: React.ReactNode;
@@ -9,7 +9,7 @@ interface button {
   action?: any;
 }
 
-function Button(props: button) {
+function Button(props: Button) {
   const { type, size, children, hrefTo, action } = props;
 
   const setStyle = (type: string) => {

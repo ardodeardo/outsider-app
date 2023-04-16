@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 
 import { HiMagnifyingGlass } from "react-icons/hi2";
 
-interface searchBox {
+interface SearchBox {
   defaultKeyword?: string | string[];
 }
 
-function SearchBox(props: searchBox) {
+function SearchBox(props: SearchBox) {
   const [keyword, setKeyword] = useState<string>("");
   const { defaultKeyword } = props;
 

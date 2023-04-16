@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { PATH } from "@/constants";
 
-type Image = {
+interface Image {
   src: string;
   alt: string;
   className: string;

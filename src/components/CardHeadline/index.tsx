@@ -3,14 +3,14 @@ import React from 'react'
 import Link from 'next/link'
 import ImageWithFallback from '../Image';
 
-interface cardHeadline {
+interface CardHeadline {
   media: string;
   image: string;
   title: string;
   url: string;
 }
 
-function CardHeadline(props: cardHeadline) {
+function CardHeadline(props: CardHeadline) {
 
   const { media, image, title, url } = props;
 

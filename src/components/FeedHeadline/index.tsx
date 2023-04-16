@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import React from 'react'
 
-interface feedHeadline {
+interface FeedHeadline {
   media: string;
   title: string;
   url: string;
 }
 
-function FeedHeadline(props: feedHeadline) {
+function FeedHeadline(props: FeedHeadline) {
   const { media, title, url } = props;
 
   return (

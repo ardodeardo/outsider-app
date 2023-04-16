@@ -4,13 +4,18 @@ import { useTheme } from 'next-themes';
 
 import { BiMoon, BiSun } from "react-icons/bi";
 
-interface header {
+interface Header {
   toggleSidebar: any
 }
 
-export default function Header(props: header) {
-  const { theme, setTheme, systemTheme } = useTheme();
+export default function Header(props: Header) {
   const { toggleSidebar } = props;
+  const { theme, setTheme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState<boolean>(false)
+
+  useEffect(() => {
+    setMounted(true);
+  }, [])
 
   const toggleTheme = () => {
     const swappedTheme = theme === 'dark' ? 'light' : 'dark';
@@ -23,17 +28,19 @@ export default function Header(props: header) {
       <div className='flex justify-between p-5'>
 
         <div className='flex flex-col justify-center gap-y-1 hover:cursor-pointer' onClick={() => toggleSidebar()}>
-          <span className='block border-b border-b-black dark:border-b-white w-5'></span>
-          <span className='block border-b border-b-black dark:border-b-white w-5'></span>
-          <span className='block border-b border-b-black dark:border-b-white w-5'></span>
+          <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
+          <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
+          <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
         </div>
 
-        <div className='font-bold text-xl tracking-widest'>
+        <div className='font-bold text-2xl tracking-widest'>
           <Link href="/">OUTSIDER</Link>
         </div>
 
-        <button className='flex items-center text-2xl' onClick={() => toggleTheme()}>
-          { theme === 'dark' ? <BiSun className='text-yellow-sunny'></BiSun> : <BiMoon></BiMoon> }
+        <button className='flex items-center text-2xl w-6' onClick={() => toggleTheme()}>
+          {mounted && (
+            theme === 'dark' ? <BiSun className='text-yellow-sunny'></BiSun> : <BiMoon></BiMoon>
+          )}
         </button>
       </div>
     </header >
