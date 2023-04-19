@@ -1,7 +1,15 @@
+import dayjs from 'dayjs';
+
+export const formatDate = (param: string, format: string = 'MMM DD, YYYY, hh.mm A') => {
+  const formatted = dayjs(param).format(format);
+
+  return formatted;
+}
+
 export const filterTitle = (media: string, title: string) => {
   let sanitized: string = title;
 
-  const cutOffPart: string[] =
+  const cutOffPart: Array<string> =
     [
       `- ${media}`,
       `${media} News`,

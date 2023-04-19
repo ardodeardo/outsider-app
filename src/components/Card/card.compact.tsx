@@ -2,15 +2,7 @@ import React from 'react'
 import Link from 'next/link';
 
 import ImageWithFallback from '../Image';
-
-interface CardCompact {
-  media: string;
-  image: string;
-  title: string;
-  description: string;
-  date?: string;
-  url: string;
-}
+import { CardCompact } from '@/interfaces/components.card';
 
 function CardCompact(props: CardCompact) {
 

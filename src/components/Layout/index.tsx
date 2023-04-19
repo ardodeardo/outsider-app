@@ -1,10 +1,11 @@
-import React, { useState, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import { Lato } from "next/font/google";
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { useContainer } from '@/hooks/context';
 
 const lato = Lato({
   weight: ['300', '400', '700', '900'],
@@ -20,12 +21,9 @@ interface Layout {
 }
 
 function Layout(props: Layout) {
-  const [sidebarActive, setSidebarActive] = useState<boolean>(false);
   const { pageTitle, children } = props;
 
-  const handleSidebar = () => {
-    setSidebarActive(!sidebarActive);
-  }
+  const { state } = useContainer();
 
   return (
     <div className={lato.className}>
@@ -36,13 +34,13 @@ function Layout(props: Layout) {
         <link rel="icon" href="/images/favicon.png" />
       </Head>
 
-      <Header toggleSidebar={handleSidebar}></Header>
+      <Header></Header>
 
       <main className='relative bg-white dark:bg-black'>
         {
-          sidebarActive &&
+          state.sidebarActive &&
           <Suspense fallback={<></>}>
-            <SideBar toggleSidebar={handleSidebar}></SideBar>
+            <SideBar></SideBar>
           </Suspense>
         }
 
@@ -50,7 +48,7 @@ function Layout(props: Layout) {
       </main>
 
       <Footer></Footer>
-    </div>
+    </div >
   )
 }
 

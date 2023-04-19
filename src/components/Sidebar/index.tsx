@@ -3,23 +3,21 @@ import Link from 'next/link';
 
 import { BsXLg } from "react-icons/bs";
 import SearchBox from '../SearchBox';
-import { CONTENT } from '@/constants';
+import { CONTENT } from '@/constants/content';
 
+import { useContainer } from '@/hooks/context';
 
-interface Sidebar {
-  toggleSidebar: any
-}
-
-function SideBar(props: Sidebar) {
+function SideBar() {
   const categories: Array<string> = CONTENT.categories;
-  const { toggleSidebar } = props;
+
+  const { dispatchSidebar } = useContainer();
 
   return (
     <nav className="sidebar__container">
       <div className='p-5'>
         <section>
           <div className='flex justify-end'>
-            <button className='text-2xl' onClick={() => toggleSidebar()}>
+            <button className='text-2xl' onClick={() => dispatchSidebar()}>
               <BsXLg></BsXLg>
             </button>
           </div>
@@ -32,7 +30,7 @@ function SideBar(props: Sidebar) {
             {
               categories.map(item => {
                 return <li key={item} className="text-xl font-bold tracking-widest uppercase hover:underline underline-offset-8">
-                  <Link href={`/category/${item.toLocaleLowerCase()}`} onClick={() => setTimeout(() => toggleSidebar(), 500)}>{item}</Link>
+                  <Link href={`/category/${item.toLocaleLowerCase()}`} onClick={() => setTimeout(() => dispatchSidebar(), 500)}>{item}</Link>
                 </li>
               })
             }

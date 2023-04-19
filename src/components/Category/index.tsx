@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
 
-import { CONTENT } from '@/constants';
+import { CONTENT } from '@/constants/content';
 
 function Category() {
   const categories: Array<string> = CONTENT.categories;

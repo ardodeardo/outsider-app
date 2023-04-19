@@ -3,11 +3,12 @@ import { useRouter } from 'next/router';
 
 import Layout from '@/components/Layout';
 import SearchBox from '@/components/SearchBox';
-import CardSearch from '@/components/CardSearch';
+import CardSearch from '@/components/Card/card.search';
 
-import { PATH, API_KEY } from "@/constants";
+import { PATH } from "@/constants/path";
 import { Data, Article } from "@/interfaces";
 import { filterTitle } from "@/helper";
+import { everything } from '@/api/newsapi';
 
 interface Search {
   data: Data
@@ -73,30 +74,11 @@ function Search({ data }: Search) {
 export async function getServerSideProps(context: { query: any }) {
   const { query } = context;
 
-  try {
-    // can't mix sources param with the country or category params.
-    const queries = {
-      q: query.q,
-      pageSize: 10,
-      page: 1,
-      from: "",
-      to: "",
-      language: "en"
-    }
+  const data = await everything({ q: query.q });
 
-
-    const response = await fetch(`https://newsapi.org/v2/everything?q=${queries.q}&pageSize=${queries.pageSize}&page=${queries.page}&apiKey=${API_KEY}`, {
-      method: "GET"
-    });
-
-    const data = await response.json();
-
-    return {
-      props: { data },
-      // revalidate: 60 * 15
-    }
-  } catch (error) {
-    console.log(`error`, error);
+  return {
+    props: { data },
+    // revalidate: 60 * 15
   }
 }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image";
 
-import { PATH } from "@/constants";
+import { PATH } from "@/constants/path";
 
 interface Image {
   src: string;

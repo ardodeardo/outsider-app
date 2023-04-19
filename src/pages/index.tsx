@@ -1,22 +1,25 @@
 import Layout from "@/components/Layout";
 
 import Category from "@/components/Category";
-import CardHeadline from "@/components/CardHeadline";
-import CardCompact from "@/components/CardCompact";
-import FeedHeadline from "@/components/FeedHeadline";
+import CardHeadline from "@/components/Card/card.headline";
+import CardCompact from "@/components/Card/card.compact";
+import FeedHeadline from "@/components/Feed/feed.headline";
 
-import { PATH, API_KEY } from "@/constants";
+import { PATH } from "@/constants/path";
 import { Data, Article } from "@/interfaces";
 import { filterTitle } from "@/helper";
+import { useContainer } from "@/hooks/context";
+import { headline } from "@/api/newsapi";
 
 interface Home {
   data: Data;
 }
 
+
 function Home({ data }: Home) {
   const articleList: Array<Article> = data.articles;
 
-  const renderKV = () => {
+  const renderHero = () => {
     // news #1
     const { source, urlToImage, title, url } = articleList[0];
 
@@ -87,7 +90,7 @@ function Home({ data }: Home) {
         <div className='px-5'>
           <p className="text-lg font-bold">Top Headlines</p>
           <div className="mt-4">
-            {renderKV()}
+            {renderHero()}
           </div>
         </div>
       </section>
@@ -127,31 +130,12 @@ function Home({ data }: Home) {
 
 // export async function getStaticProps() {
 export async function getServerSideProps() {
-  try {
-    // can't mix sources param with the country or category params.
-    const queries = {
-      country: "us",
-      category: "",
-      sources: "",
-      q: "",
-      pageSize: 10,
-      page: 1
-    }
+  const data = await headline({country: "us"});
 
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=${queries.country}&category=${queries.category}&sources=${queries.sources}&q=${queries.q}&pageSize=${queries.pageSize}&page=${queries.page}&apiKey=${API_KEY}`, {
-      method: "GET"
-    });
-
-    const data = await response.json();
-
-    return {
-      props: { data },
-      // revalidate: 60 * 15
-    }
-  } catch (error) {
-    console.log(`error`, error)
+  return {
+    props: { data },
+    // revalidate: 60 * 15
   }
-
 }
 
 export default Home

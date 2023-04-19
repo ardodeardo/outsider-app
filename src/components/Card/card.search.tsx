@@ -1,24 +1,11 @@
 import React from 'react'
-import dayjs from 'dayjs';
 import Link from 'next/link';
 import ImageWithFallback from '../Image';
-
-interface CardSearch {
-  media: string;
-  image: string;
-  title: string;
-  date: string;
-  url: string;
-}
+import { CardSearch } from '@/interfaces/components.card';
+import { formatDate } from '@/helper';
 
 function CardSearch(props: CardSearch) {
   const { media, image, title, date, url } = props;
-
-  const formatDate = (param: string) => {
-    const formatted = dayjs(param).format('MMM DD, YYYY, hh.mm A');
-
-    return formatted;
-  }
 
   return (
     <Link href={url} className="border-b border-grey-thin pb-4 last:border-none">

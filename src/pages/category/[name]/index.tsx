@@ -2,14 +2,16 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 
 import Layout from '@/components/Layout';
-import CardCompact from '@/components/CardCompact';
+import CardCompact from '@/components/Card/card.compact';
 
-import { PATH, API_KEY } from "@/constants";
+import { PATH } from "@/constants/path";
 import { Data, Article } from "@/interfaces";
 import { filterTitle } from "@/helper";
+import { headline } from '@/api/newsapi';
 
 interface Category {
   data: Data;
+  test: any;
 }
 
 function Category({ data }: Category) {
@@ -17,15 +19,44 @@ function Category({ data }: Category) {
   const { name } = router.query;
 
   const [posts, setPosts] = useState<Article[]>([]);
+  // const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     setPosts(data.articles);
-  }, [])
+  }, []);
+
+  // const loadMore = async () => {
+  //   const res =
+  //     await fetch('/api/middle?q=test')
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //       })
+  // }
+
+  // const handleScroll = () => {
+  //   const scrollTop = document.documentElement.scrollTop;
+  //   const scrollHeight = document.documentElement.scrollHeight;
+  //   const clientHeight = document.documentElement.clientHeight;
+
+  //   if (scrollTop + clientHeight >= scrollHeight) {
+  //     loadMore();
+  //   }
+  // }
 
   useEffect(() => {
     setPosts(data.articles);
-  }, [data])
-  
+
+    // window.addEventListener('scroll', handleScroll);
+
+    // return () => {
+    //   const next = page + 1;
+    //   setPage(next);
+
+    //   window.removeEventListener('scroll', handleScroll);
+    // }
+  }, [data]);
+
   const renderNews = () => {
     const news = posts.map(post => {
       const { source, urlToImage, title, description, url } = post;
@@ -76,29 +107,11 @@ function Category({ data }: Category) {
 export async function getServerSideProps(context: { params: any }) {
   const { params } = context;
 
-  try {
-    // can't mix sources param with the country or category params.
-    const queries = {
-      country: "us",
-      category: params.name,
-      sources: "",
-      q: "",
-      pageSize: 10,
-      page: 1
-    }
+  const data = await headline({ category: params.name });
 
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=${queries.country}&category=${queries.category}&sources=${queries.sources}&q=${queries.q}&pageSize=${queries.pageSize}&page=${queries.page}&apiKey=${API_KEY}`, {
-      method: "GET"
-    });
-
-    const data = await response.json();
-
-    return {
-      props: { data },
-      // revalidate: 60 * 15
-    }
-  } catch (error) {
-    console.log(`error`, error);
+  return {
+    props: { data },
+    // revalidate: 60 * 15
   }
 }
 

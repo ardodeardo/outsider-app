@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link';
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
 
+import { useContainer } from '@/hooks/context';
 import { BiMoon, BiSun } from "react-icons/bi";
 
-interface Header {
-  toggleSidebar: any
-}
+export default function Header() {
 
-export default function Header(props: Header) {
-  const { toggleSidebar } = props;
   const { theme, setTheme, systemTheme } = useTheme();
-  const [mounted, setMounted] = useState<boolean>(false)
+  const [didMount, setDidMount] = useState<boolean>(false);
+  const { dispatchSidebar } = useContainer();
 
   useEffect(() => {
-    setMounted(true);
+    setDidMount(true);
   }, [])
 
   const toggleTheme = () => {
@@ -23,14 +21,22 @@ export default function Header(props: Header) {
     setTheme(swappedTheme);
   }
 
+  const Hamburger: React.FC = () => {
+    return (
+      <>
+        <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
+        <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
+        <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
+      </>
+    )
+  }
+
   return (
     <header className='bg-white dark:bg-black border-b border-grey-thin dark:border-grey-thin sticky top-0 z-40'>
       <div className='flex justify-between p-5'>
 
-        <div className='flex flex-col justify-center gap-y-1 hover:cursor-pointer' onClick={() => toggleSidebar()}>
-          <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
-          <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
-          <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
+        <div className='flex flex-col justify-center gap-y-1 hover:cursor-pointer' onClick={() => dispatchSidebar()}>
+          <Hamburger></Hamburger>
         </div>
 
         <div className='font-bold text-2xl tracking-widest'>
@@ -38,7 +44,7 @@ export default function Header(props: Header) {
         </div>
 
         <button className='flex items-center text-2xl w-6' onClick={() => toggleTheme()}>
-          {mounted && (
+          {didMount && (
             theme === 'dark' ? <BiSun className='text-yellow-sunny'></BiSun> : <BiMoon></BiMoon>
           )}
         </button>

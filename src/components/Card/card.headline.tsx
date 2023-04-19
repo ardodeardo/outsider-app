@@ -2,16 +2,9 @@ import React from 'react'
 
 import Link from 'next/link'
 import ImageWithFallback from '../Image';
+import { Card } from '@/interfaces/components.card';
 
-interface CardHeadline {
-  media: string;
-  image: string;
-  title: string;
-  url: string;
-}
-
-function CardHeadline(props: CardHeadline) {
-
+function CardHeadline(props: Card) {
   const { media, image, title, url } = props;
 
   return (
