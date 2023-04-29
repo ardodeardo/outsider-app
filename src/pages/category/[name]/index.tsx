@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 
 import Layout from '@/components/Layout';
+import Button from '@/components/Button';
 import CardCompact from '@/components/Card/card.compact';
+import LimitApi from '@/components/Limit/limit.api';
 
 import { PATH } from "@/constants/path";
 import { Data, Article } from "@/interfaces";
@@ -11,7 +13,10 @@ import { headline } from '@/api/newsapi';
 
 interface Category {
   data: Data;
-  test: any;
+}
+
+const CONFIG = {
+  perPage: 20
 }
 
 function Category({ data }: Category) {
@@ -19,67 +24,69 @@ function Category({ data }: Category) {
   const { name } = router.query;
 
   const [posts, setPosts] = useState<Article[]>([]);
-  // const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
+  const [hasNext, setHasNext] = useState<boolean>(false);
 
   useEffect(() => {
     setPosts(data.articles);
   }, []);
 
-  // const loadMore = async () => {
-  //   const res =
-  //     await fetch('/api/middle?q=test')
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //       })
-  // }
-
-  // const handleScroll = () => {
-  //   const scrollTop = document.documentElement.scrollTop;
-  //   const scrollHeight = document.documentElement.scrollHeight;
-  //   const clientHeight = document.documentElement.clientHeight;
-
-  //   if (scrollTop + clientHeight >= scrollHeight) {
-  //     loadMore();
-  //   }
-  // }
 
   useEffect(() => {
-    setPosts(data.articles);
+    const pagination = Math.ceil(data.totalResults / CONFIG.perPage);
+    const checkNext = page >= pagination ? false : true;
 
-    // window.addEventListener('scroll', handleScroll);
+    setHasNext(checkNext);
+  }, [posts])
 
-    // return () => {
-    //   const next = page + 1;
-    //   setPage(next);
 
-    //   window.removeEventListener('scroll', handleScroll);
-    // }
-  }, [data]);
+  const loadMore = async () => {
+    try {
+      const next = page + 1;
+      setPage(next);
+
+      const fetchedPosts = await fetch(`http://localhost:3000/api/newsapi/headline?category=${name}&pageSize=${CONFIG.perPage}&page=${next}`).then(res => res.json());
+
+      console.log(fetchedPosts);
+
+      setPosts([
+        ...posts,
+        ...fetchedPosts.articles
+      ]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const renderNews = () => {
-    const news = posts.map(post => {
-      const { source, urlToImage, title, description, url } = post;
+    if (posts && posts.length > 0) {
+      const news = posts.map(post => {
+        const { source, urlToImage, title, description, url } = post;
 
-      const compiledTitle = filterTitle(source.name, title);
+        const compiledTitle = filterTitle(source.name, title);
 
+        return (
+          <CardCompact
+            key={`p${page}_${title}`}
+            media={source.name}
+            image={PATH.staticImage.concat(urlToImage)}
+            title={compiledTitle}
+            description={description}
+            url={url}
+          ></CardCompact>
+        )
+      })
+
+      return news;
+    } else {
       return (
-        <CardCompact
-          key={title}
-          media={source.name}
-          image={PATH.staticImage.concat(urlToImage)}
-          title={compiledTitle}
-          description={description}
-          url={url}
-        ></CardCompact>
+        <>no post</>
       )
-    })
-
-    return news;
+    }
   }
 
   return (
-    <Layout pageTitle={`Outsider - ${name}`}>
+    <Layout pageTitle={`Outsider - ${name}`} apiStatusCode={data.code}>
       <section className='mt-8'>
         <div className='px-5'>
           <h1 className='text-xl text-blue-primary dark:text-blue-secondary tracking-widest font-bold uppercase'>{name}</h1>
@@ -97,21 +104,25 @@ function Category({ data }: Category) {
           <div className="grid grid-cols-1 gap-y-6">
             {renderNews()}
           </div>
+          {
+            hasNext && (<div className='mt-10 text-center'>
+              <Button type="primary" action={() => loadMore()}>Load more</Button>
+            </div>)
+          }
         </div>
       </section>
     </Layout>
   )
 }
 
-// export async function getStaticProps() {
 export async function getServerSideProps(context: { params: any }) {
   const { params } = context;
 
-  const data = await headline({ category: params.name });
+  // const data = await headline({ category: params.name });
+  const data = await fetch(`http://localhost:3000/api/newsapi/headline?category=${params.name}&pageSize=${CONFIG.perPage}`).then(res => res.json());
 
   return {
     props: { data },
-    // revalidate: 60 * 15
   }
 }
 

@@ -6,11 +6,11 @@ interface User {
 
 export interface InitialState {
   sidebarActive: boolean;
-  isLoggedin: boolean;
+  isLoggedIn: boolean;
   user: User;
 }
 
 export interface Action {
   type: string;
-  payload: any;
+  payload?: any;
 }

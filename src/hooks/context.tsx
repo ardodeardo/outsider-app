@@ -1,10 +1,15 @@
 import React, { createContext, useContext } from 'react';
 import NewsReducer from '@/model/reducer';
-import { InitialState } from '@/interfaces/reducer';
+import { InitialState, Action } from '@/interfaces/reducer';
 
 interface ContainerContextType {
   state: InitialState;
-  dispatchSidebar: () => void;
+  dispatchSidebar: () => React.Dispatch<Action>;
+}
+
+interface Test {
+  state: InitialState;
+  dispatch: React.Dispatch<Action>;
 }
 
 const ContainerContext = createContext<ContainerContextType | null>(null);
@@ -14,7 +19,8 @@ function AppContext({ children }: { children: React.ReactNode }) {
 
   const dispatchSidebar = () => {
     dispatch({
-      type: 'sidebar.toggle'
+      type: 'sidebar.toggle',
+      payload: true
     });
   }
 

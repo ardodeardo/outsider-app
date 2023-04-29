@@ -18,6 +18,10 @@ export default function Footer() {
       url: "/about"
     },
     {
+      label: "Publishers",
+      url: "/publisher"
+    },
+    {
       label: "Sitemap",
       url: "/sitemap"
     },

@@ -25,28 +25,35 @@ function Search({ data }: Search) {
   }, [])
 
   const renderNews = () => {
-    const news = posts.map(post => {
-      const { source, urlToImage, title, publishedAt, url } = post;
+    if (posts && posts.length > 0) {
 
-      const compiledTitle = filterTitle(source.name, title);
+      const news = posts.map(post => {
+        const { source, urlToImage, title, publishedAt, url } = post;
 
+        const compiledTitle = filterTitle(source.name, title);
+
+        return (
+          <CardSearch
+            key={title}
+            media={source.name}
+            image={PATH.staticImage.concat(urlToImage)}
+            title={compiledTitle}
+            date={publishedAt}
+            url={url}
+          ></CardSearch>
+        )
+      })
+
+      return news;
+    } else {
       return (
-        <CardSearch
-          key={title}
-          media={source.name}
-          image={PATH.staticImage.concat(urlToImage)}
-          title={compiledTitle}
-          date={publishedAt}
-          url={url}
-        ></CardSearch>
+        <>no post</>
       )
-    })
-
-    return news;
+    }
   }
 
   return (
-    <Layout pageTitle={`Outsider - Search Results`}>
+    <Layout pageTitle={`Outsider - Search Results`} apiStatusCode={data.code}>
       <section>
         <div className='px-5'>
           <SearchBox defaultKeyword={q}></SearchBox>
@@ -70,15 +77,14 @@ function Search({ data }: Search) {
   )
 }
 
-// export async function getStaticProps() {
 export async function getServerSideProps(context: { query: any }) {
   const { query } = context;
 
-  const data = await everything({ q: query.q });
+  // const data = await everything({ q: query.q });
+  const data = await fetch(`http://localhost:3000/api/newsapi/everything?q=${query.q}&pageSize=${20}`).then(res => res.json());
 
   return {
     props: { data },
-    // revalidate: 60 * 15
   }
 }
 

@@ -12,9 +12,19 @@ export interface Headlines extends Pagination {
 }
 
 export interface Everything extends Pagination {
-  q: string;
+  q?: string; // idk. it should be mandatory. effects on [endpoint].ts
   language?: string;
   sortBy?: "relevancy" | "popularity" | "publishedAt";
   from?: string;
   to?: string;
+}
+
+export interface Sources {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  category: string;
+  language: string;
+  country: string;
 }

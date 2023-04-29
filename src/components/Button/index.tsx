@@ -2,8 +2,8 @@ import React from 'react'
 import Link from 'next/link';
 
 interface Button {
-  type: string;
-  size: string;
+  type?: string | undefined;
+  size?: string;
   children: React.ReactNode;
   hrefTo?: string;
   action?: any;
@@ -12,7 +12,7 @@ interface Button {
 function Button(props: Button) {
   const { type, size, children, hrefTo, action } = props;
 
-  const setStyle = (type: string) => {
+  const setStyle = (type: string | undefined) => {
     let buttonType: string = "";
 
     switch (type) {

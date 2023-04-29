@@ -14,14 +14,16 @@ const lato = Lato({
 })
 
 const SideBar = dynamic(() => import('@/components/Sidebar'), { suspense: true });
+const LimitApi = dynamic(() => import('@/components/Limit/limit.api'), { suspense: true });
 
 interface Layout {
   pageTitle: string;
+  apiStatusCode?: string;
   children: React.ReactNode;
 }
 
 function Layout(props: Layout) {
-  const { pageTitle, children } = props;
+  const { pageTitle, apiStatusCode, children } = props;
 
   const { state } = useContainer();
 
@@ -44,7 +46,9 @@ function Layout(props: Layout) {
           </Suspense>
         }
 
-        {children}
+        {
+          apiStatusCode === "rateLimited" ? <LimitApi></LimitApi> : children
+        }
       </main>
 
       <Footer></Footer>

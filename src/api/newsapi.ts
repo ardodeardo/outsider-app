@@ -3,7 +3,7 @@ import { Headlines, Everything } from "@/interfaces/api.query";
 
 export async function headline(params: Headlines) {
   try {
-    const { country, category, sources, q, pageSize, page } = params;
+    const { country = "us", category, sources, q, pageSize, page } = params;
 
     // can't mix sources param with the country or category params.
     const queries = {

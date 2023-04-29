@@ -2,6 +2,8 @@ export interface Data {
   status: string;
   totalResults: number;
   articles: Array<Article>;
+  code?: string;
+  message?: string;
 }
 
 export interface Article {

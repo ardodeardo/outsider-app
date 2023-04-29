@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { Reducer, useReducer } from "react";
 import { InitialState, Action } from "@/interfaces/reducer";
 
 const initialState = {
