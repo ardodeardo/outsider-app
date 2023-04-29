@@ -82,19 +82,19 @@ export default async function handler(
 
       break;
 
-    case 'sources':
-      try {
-        let url = `${CONFIG.domain}sources?apiKey=${CONFIG.key}`;
+    // case 'sources':
+    //   try {
+    //     let url = `${CONFIG.domain}sources?apiKey=${CONFIG.key}`;
 
-        const response = await fetch(url, { method: "GET" });
-        const data = await response.json();
+    //     const response = await fetch(url, { method: "GET" });
+    //     const data = await response.json();
 
-        res.status(200).json(data);
-      } catch (error) {
-        console.log(`error`, error);
-      }
+    //     res.status(200).json(data);
+    //   } catch (error) {
+    //     console.log(`error`, error);
+    //   }
 
-      break;
+    //   break;
 
     default:
       const error = {

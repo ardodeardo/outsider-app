@@ -115,11 +115,10 @@ function Category({ data }: Category) {
   )
 }
 
-export async function getServerSideProps(context: { params: any }) {
+export async function getServerSideProps(context: any) {
   const { params } = context;
 
-  // const data = await headline({ category: params.name });
-  const data = await fetch(`http://localhost:3000/api/newsapi/headline?category=${params.name}&pageSize=${CONFIG.perPage}`).then(res => res.json());
+  const data = await fetch(`${process.env.HOST}api/newsapi/headline?category=${params.name}&pageSize=${CONFIG.perPage}`).then(res => res.json());
 
   return {
     props: { data },

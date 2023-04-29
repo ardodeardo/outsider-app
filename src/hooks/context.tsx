@@ -1,21 +1,16 @@
 import React, { createContext, useContext } from 'react';
 import NewsReducer from '@/model/reducer';
-import { InitialState, Action } from '@/interfaces/reducer';
+import { InitialState } from '@/interfaces/reducer';
 
 interface ContainerContextType {
   state: InitialState;
-  dispatchSidebar: () => React.Dispatch<Action>;
-}
-
-interface Test {
-  state: InitialState;
-  dispatch: React.Dispatch<Action>;
+  dispatchSidebar: () => void;
 }
 
 const ContainerContext = createContext<ContainerContextType | null>(null);
 
 function AppContext({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = NewsReducer();
+  const { state, dispatch } = NewsReducer();
 
   const dispatchSidebar = () => {
     dispatch({
@@ -26,7 +21,7 @@ function AppContext({ children }: { children: React.ReactNode }) {
 
   const value = {
     state,
-    dispatchSidebar,
+    dispatchSidebar
   }
 
   return (

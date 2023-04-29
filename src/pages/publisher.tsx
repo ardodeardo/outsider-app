@@ -3,6 +3,7 @@ import React from 'react'
 import Layout from '@/components/Layout';
 import { Sources } from '@/interfaces/api.query';
 import GridSources from '@/components/Grid/grid.sources'
+import { sources } from '@/api/newsapi';
 
 interface Data {
   status: string;
@@ -34,7 +35,7 @@ function Publisher({ data }: Publisher) {
 }
 
 export async function getStaticProps() {
-  const data = await fetch('http://localhost:3000/api/newsapi/sources').then(res => res.json());
+  const data = await sources();
 
   return {
     props: { data },

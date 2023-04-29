@@ -25,14 +25,13 @@ function reducer(state: InitialState, action: Action) {
     default: {
       throw Error(`unknown action ${action.type}`);
     }
-
   }
 }
 
 function NewsReducer() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  return [state, dispatch];
+  return { state, dispatch };
 }
 
 export default NewsReducer

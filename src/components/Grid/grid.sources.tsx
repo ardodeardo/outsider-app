@@ -12,11 +12,11 @@ function GridSources({ data }: { data: Sources[] }) {
   const render = () => {
     // const items = data.filter(item => item.language === "en");
     const items = data;
-    
-    return (<>{
-      items.map(item => {
+
+    if (items && items.length > 0) {
+      const lists = items.map((item, index) => {
         return (
-          <div className="aspect-w-1 aspect-h-1">
+          <div className="aspect-w-1 aspect-h-1" key={`i${index}_${item.url}`}>
             <Link href={item.url} target="_blank">
               <ImageWithFallback
                 src={`${CONFIG.domain}${item.url}`}
@@ -29,7 +29,13 @@ function GridSources({ data }: { data: Sources[] }) {
           </div>
         )
       })
-    }</>)
+
+      return lists;
+    } else {
+      return (
+        <>no data</>
+      )
+    }
   }
 
   return (

@@ -64,3 +64,16 @@ export async function everything(params: Everything) {
     console.log(`error`, error);
   }
 }
+
+export async function sources() {
+  try {
+    let url = `https://newsapi.org/v2/sources?apiKey=${API_KEY.newsapi}`;
+
+    const response = await fetch(url, { method: "GET" });
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log(`error`, error);
+  }
+}

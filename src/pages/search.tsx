@@ -8,7 +8,6 @@ import CardSearch from '@/components/Card/card.search';
 import { PATH } from "@/constants/path";
 import { Data, Article } from "@/interfaces";
 import { filterTitle } from "@/helper";
-import { everything } from '@/api/newsapi';
 
 interface Search {
   data: Data
@@ -77,11 +76,10 @@ function Search({ data }: Search) {
   )
 }
 
-export async function getServerSideProps(context: { query: any }) {
+export async function getServerSideProps(context: any) {
   const { query } = context;
 
-  // const data = await everything({ q: query.q });
-  const data = await fetch(`http://localhost:3000/api/newsapi/everything?q=${query.q}&pageSize=${20}`).then(res => res.json());
+  const data = await fetch(`${process.env.HOST}api/newsapi/everything?q=${query.q}&pageSize=${20}`).then(res => res.json());
 
   return {
     props: { data },

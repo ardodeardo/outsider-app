@@ -8,8 +8,6 @@ import FeedHeadline from "@/components/Feed/feed.headline";
 import { PATH } from "@/constants/path";
 import { Data, Article } from "@/interfaces";
 import { filterTitle } from "@/helper";
-import { headline } from "@/api/newsapi";
-import LimitApi from "@/components/Limit/limit.api";
 
 interface Home {
   data: Data;
@@ -147,8 +145,7 @@ function Home({ data }: Home) {
 }
 
 export async function getServerSideProps() {
-  // const data = await headline({country: "us"});
-  const data = await fetch('http://localhost:3000/api/newsapi/headline?country=us').then(res => res.json());
+  const data = await fetch(`${process.env.HOST}api/newsapi/headline?country=us`).then(res => res.json());
 
   return {
     props: { data },
