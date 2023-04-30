@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
 
@@ -48,7 +49,13 @@ export default function Footer() {
           <div className='mx-auto'>
             <p>Powered By</p>
             <Link href="https://newsapi.org/" aria-label='News Api'>
-              <img src="/images/newsapi.png" alt="News Api" className='h-7 mt-2' />
+              <Image
+                src="/images/newsapi.png"
+                alt="News Api"
+                width={350}
+                height={102}
+                className='h-7 w-auto mt-2'
+              />
             </Link>
           </div>
           <p>© 2023 Outsider. Inspired by Insider</p>

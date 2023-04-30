@@ -15,12 +15,14 @@ function GridSources({ data }: { data: Sources[] }) {
 
     if (items && items.length > 0) {
       const lists = items.map((item, index) => {
+        const { url, name } = item;
+
         return (
-          <div className="aspect-w-1 aspect-h-1" key={`i${index}_${item.url}`}>
-            <Link href={item.url} target="_blank">
+          <div className="aspect-w-1 aspect-h-1" key={`i${index}_${url}`}>
+            <Link href={url} target="_blank">
               <ImageWithFallback
-                src={`${CONFIG.domain}${item.url}`}
-                alt={item.name}
+                src={`${CONFIG.domain}${url}`}
+                alt={name}
                 className='w-full h-full object-center object-cover rounded-full drop-shadow-md hover:drop-shadow-xl transition'
                 width={64}
                 height={64}
