@@ -6,11 +6,26 @@ import CardHeadline from '@/components/Card/card.headline';
 import CardCompact from '@/components/Card/card.compact';
 import CardSearch from '@/components/Card/card.search';
 import FeedHeadline from '@/components/Feed/feed.headline';
+import GridSources from '@/components/Grid/grid.sources';
 import Button from '@/components/Button';
+import Loader from '@/components/Loader';
 
 import { PATH } from '@/constants/path';
 
 export default function UiKit() {
+
+  const nypost = {
+    id: "nypost",
+    name: "New York Post",
+    description: "New York Post - Breaking News, Top Headlines, Photos & Videos",
+    url: "https://nypost.com",
+    category: "general",
+    language: "en",
+    country: "us"
+  }
+
+  const publishers = [nypost, nypost, nypost, nypost];
+
   return (
     <Layout pageTitle='outsider - ui components'>
 
@@ -71,10 +86,22 @@ export default function UiKit() {
 
       <section className='mt-6'>
         <div className='px-5'>
+          <GridSources data={publishers}></GridSources>
+        </div>
+      </section>
+
+      <section className='mt-6'>
+        <div className='px-5'>
           <Button type="primary" size="md" action={() => console.log('button clicked')}>Primary Button</Button>
         </div>
       </section>
 
+      <section className='mt-6'>
+        <div className='px-5'>
+          <Loader></Loader>
+        </div>
+      </section>
+      
     </Layout>
   )
 }

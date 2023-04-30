@@ -8,7 +8,7 @@ function Category() {
 
   return (
     <div className="mt-5">
-      <ul className="w-full overflow-x-auto flex gap-x-3 px-5">
+      <ul className="category__scrollbar-visual--hidden w-full overflow-x-auto flex gap-x-3 px-5">
         {
           categories.map(category => {
             return (

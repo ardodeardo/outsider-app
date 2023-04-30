@@ -1,9 +1,9 @@
 <div align="center">
-  <h1 align="center">O U T S I D E R</h1>
+  <h1 align="center" style="font-weight:bold">O U T S I D E R</h1>
   <p align="center">
     A news portal prototyping material
     <br /><br />
-    <img src="https://user-images.githubusercontent.com/61144146/231206458-a175983d-db45-4859-8e3d-fbf44b7664fb.png">
+    <img src="https://user-images.githubusercontent.com/61144146/235321104-b2b96e77-5077-49d2-910a-a70678138c0d.png">
     <br />
     <a href="https://outsider-app.vercel.app/">View Demo</a>
     <br /><br />
@@ -27,10 +27,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 outsider-app
 └── public
 └── src
-	├── components
-	├── pages
-	├── styles
-	└── ...
+  ├── api
+  ├── components
+  ├── constants
+  ├── helper
+  ├── hooks
+  ├── interfaces
+  ├── model
+  ├── pages
+  ├── static
+  ├── styles
+  └── ...
 ```
 
 ## Getting Started

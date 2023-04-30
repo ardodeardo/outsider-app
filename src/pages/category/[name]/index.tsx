@@ -4,32 +4,38 @@ import { useRouter } from 'next/router'
 import Layout from '@/components/Layout';
 import Button from '@/components/Button';
 import CardCompact from '@/components/Card/card.compact';
-import LimitApi from '@/components/Limit/limit.api';
+import Loader from '@/components/Loader';
 
 import { PATH } from "@/constants/path";
 import { Data, Article } from "@/interfaces";
 import { filterTitle } from "@/helper";
-import { headline } from '@/api/newsapi';
 
 interface Category {
   data: Data;
+  host: string;
 }
 
-const CONFIG = {
-  perPage: 20
+const CONFIG: { perPage: number, loadingDelay: number } = {
+  perPage: 20,
+  loadingDelay: 3000 // 3s
 }
 
-function Category({ data }: Category) {
+function Category({ data, host }: Category) {
   const router = useRouter();
   const { name } = router.query;
 
   const [posts, setPosts] = useState<Article[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasNext, setHasNext] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setPosts(data.articles);
   }, []);
+
+  useEffect(() => {
+    setPosts(data.articles);
+  }, [data])
 
 
   useEffect(() => {
@@ -39,22 +45,40 @@ function Category({ data }: Category) {
     setHasNext(checkNext);
   }, [posts])
 
-
   const loadMore = async () => {
+    setIsLoading(true);
+
     try {
       const next = page + 1;
       setPage(next);
 
-      const fetchedPosts = await fetch(`http://localhost:3000/api/newsapi/headline?category=${name}&pageSize=${CONFIG.perPage}&page=${next}`).then(res => res.json());
+      const fetchedPosts = await fetch(`${host}api/newsapi/headline?category=${name}&pageSize=${CONFIG.perPage}&page=${next}`).then(res => res.json());
 
-      console.log(fetchedPosts);
+      const { status, code, articles } = fetchedPosts;
 
-      setPosts([
-        ...posts,
-        ...fetchedPosts.articles
-      ]);
+      if (status !== "error" || code !== "maximumResultsReached") {
+        setTimeout(() => {
+          setIsLoading(false);
+
+          setPosts([
+            ...posts,
+            ...articles
+          ]);
+        }, CONFIG.loadingDelay);
+
+      } else {
+        setTimeout(() => {
+          setIsLoading(false);
+
+          throw Error(code);
+        }, CONFIG.loadingDelay);
+      }
     } catch (error) {
-      console.log(error);
+      setTimeout(() => {
+        setIsLoading(false);
+
+        console.log(error);
+      }, CONFIG.loadingDelay);
     }
   }
 
@@ -105,9 +129,13 @@ function Category({ data }: Category) {
             {renderNews()}
           </div>
           {
-            hasNext && (<div className='mt-10 text-center'>
+            (hasNext && !isLoading) &&
+            (<div className='mt-10 text-center'>
               <Button type="primary" action={() => loadMore()}>Load more</Button>
             </div>)
+          }
+          {
+            isLoading && <Loader></Loader>
           }
         </div>
       </section>
@@ -118,10 +146,15 @@ function Category({ data }: Category) {
 export async function getServerSideProps(context: any) {
   const { params } = context;
 
-  const data = await fetch(`${process.env.HOST}api/newsapi/headline?category=${params.name}&pageSize=${CONFIG.perPage}`).then(res => res.json());
+  const HOST = process.env.HOST;
+
+  const data = await fetch(`${HOST}api/newsapi/headline?category=${params.name}&pageSize=${CONFIG.perPage}`).then(res => res.json());
 
   return {
-    props: { data },
+    props: {
+      data,
+      host: HOST
+    },
   }
 }
 
