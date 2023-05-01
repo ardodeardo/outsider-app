@@ -16,7 +16,7 @@ function Loader() {
   }, []);
 
   return (
-    <div>
+    <div className="relative h-10 mt-10">
       {/* https://docs.lottiefiles.com/lottie-player/components/lottie-player/usage */}
 
       {
@@ -29,7 +29,7 @@ function Loader() {
             loop
             mode="normal"
             src={CONFIG.asset}
-            style={{ height: "150px" }}
+            style={{ height: "150px", position: "absolute", top: "50%", left:"0", right: "0", transform: "translateY(-50%)" }}
           ></lottie-player>
         )
       }
