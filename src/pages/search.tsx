@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router';
 
+import { PATH } from "@/constants/path";
+import { Data, Article } from "@/interfaces";
+import { filterTitle } from "@/helper";
+
 import Layout from '@/components/Layout';
 import Button from '@/components/Button';
 import SearchBox from '@/components/SearchBox';
 import CardSearch from '@/components/Card/card.search';
 import Loader from '@/components/Loader';
-
-import { PATH } from "@/constants/path";
-import { Data, Article } from "@/interfaces";
-import { filterTitle } from "@/helper";
 
 interface Search {
   data: Data;
@@ -115,7 +115,7 @@ function Search({ data, host }: Search) {
 
       <section className='mt-8'>
         <div className='px-5'>
-          <h1 className='text__large'>{`Results for "${q}"`}</h1>
+          <h1 className='text__large dark:text-white-secondary'>{`Results for "${q}"`}</h1>
         </div>
       </section>
 
@@ -125,7 +125,7 @@ function Search({ data, host }: Search) {
             {renderNews()}
           </div>
           {
-            (hasNext && !isLoading) &&
+            (q && q.length > 0 && hasNext && !isLoading) &&
             (<div className='mt-10 text-center'>
               <Button type="primary" action={() => loadMore()}>Load more</Button>
             </div>)

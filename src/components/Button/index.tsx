@@ -17,11 +17,11 @@ function Button(props: Button) {
 
     switch (type) {
       case 'primary':
-        buttonType = "py-2 px-5 text-white bg-blue-primary rounded-3xl text-base";
+        buttonType = "py-2 px-5 text-white dark:text-white-secondary bg-blue-primary rounded-3xl text-base";
         break;
 
       default:
-        buttonType = "py-2 px-5 text-white bg-blue-primary rounded-3xl text-base";
+        buttonType = "py-2 px-5 text-white dark:text-white-secondary bg-blue-primary rounded-3xl text-base";
         break;
     }
 

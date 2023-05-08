@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 
+import { PATH } from "@/constants/path";
+import { Data, Article } from "@/interfaces";
+import { filterTitle } from "@/helper";
+
 import Layout from '@/components/Layout';
 import Button from '@/components/Button';
 import CardCompact from '@/components/Card/card.compact';
 import Loader from '@/components/Loader';
-
-import { PATH } from "@/constants/path";
-import { Data, Article } from "@/interfaces";
-import { filterTitle } from "@/helper";
 
 interface Category {
   data: Data;

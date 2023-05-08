@@ -8,7 +8,6 @@ const CONFIG = {
 }
 
 function GridSources({ data }: { data: Sources[] }) {
-
   const render = () => {
     // const items = data.filter(item => item.language === "en");
     const items = data;

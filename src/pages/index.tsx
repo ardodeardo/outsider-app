@@ -104,7 +104,7 @@ function Home({ data }: Home) {
 
       <section className="mt-5">
         <div className='px-5'>
-          <p className="text-lg font-bold">Top Headlines</p>
+          <p className="text-lg font-bold dark:text-white-secondary">Top Headlines</p>
           <div className="mt-4">
             {renderHero()}
           </div>
@@ -113,7 +113,7 @@ function Home({ data }: Home) {
 
       <section className="mt-6">
         <div className='px-5'>
-          <span className="block border-b border-grey-primary"></span>
+          <span className="block border-b border-grey-primary dark:border-white-secondary"></span>
         </div>
       </section>
 
@@ -127,17 +127,16 @@ function Home({ data }: Home) {
 
       <section className="mt-10">
         <div className='px-5'>
-          <span className="block border-b border-grey-primary"></span>
+          <span className="block border-b border-grey-primary dark:border-white-secondary"></span>
         </div>
       </section>
 
       <section className="mt-10">
         <div className='px-5'>
-          <p className="text-lg font-bold">Featuring Headlines</p>
+          <p className="text-lg font-bold dark:text-white-secondary">Featuring Headlines</p>
           <div className="grid grid-cols-1 gap-y-4 mt-6">
             {renderFeaturingHeadlines()}
           </div>
-
         </div>
       </section>
     </Layout>

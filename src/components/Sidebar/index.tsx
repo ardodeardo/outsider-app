@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { BsXLg } from "react-icons/bs";
 import SearchBox from '../SearchBox';
 import { CONTENT } from '@/constants/content';
-
 import { useContainer } from '@/hooks/context';
 
 function SideBar() {
@@ -29,7 +28,7 @@ function SideBar() {
           <ul className='flex flex-col gap-y-7'>
             {
               categories.map(item => {
-                return <li key={item} className="text-xl font-bold tracking-widest uppercase hover:underline underline-offset-8">
+                return <li key={item} className="text-xl font-bold tracking-widest uppercase hover:underline underline-offset-8 dark:text-white-secondary">
                   <Link href={`/category/${item.toLocaleLowerCase()}`} onClick={() => setTimeout(() => dispatchSidebar(), 500)}>{item}</Link>
                 </li>
               })

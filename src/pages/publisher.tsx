@@ -20,9 +20,9 @@ function Publisher({ data }: Publisher) {
     <Layout pageTitle="Outsider - Publishers" apiStatusCode={data.code}>
       <div className="mt-8">
         <div className="px-5">
-          <h1 className="text-3xl leading-10 font-bold">
+          <h1 className="text-3xl dark:text-white-secondary leading-10 font-bold">
             Publishers</h1>
-          <p className="text-base mt-2">
+          <p className="text-base dark:text-white-secondary mt-2">
             Our trusted publishers powered by News API
           </p>
           <div className="mt-8">

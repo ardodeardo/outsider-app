@@ -12,6 +12,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        white: {
+          DEFAULT: '#FFFFFF',
+          secondary: '#F5F5F5'
+        },
         blue: {
           primary: '#096FFA',
           secondary: '#5B9DF6'
@@ -19,7 +23,6 @@ module.exports = {
         grey: {
           primary: '#8D8D94',
           surface: '#F8F9F9',
-          // surface: '#121212',
           thin: '#EDEDED',
           darken: '#6D787A',
         },

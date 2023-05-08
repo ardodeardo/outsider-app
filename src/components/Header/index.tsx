@@ -24,9 +24,9 @@ export default function Header() {
   const Hamburger: React.FC = () => {
     return (
       <>
-        <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
-        <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
-        <span className='block border-b-2 border-b-black dark:border-b-white w-5'></span>
+        <span className='block border-b-2 border-b-black dark:border-b-white-secondary w-5'></span>
+        <span className='block border-b-2 border-b-black dark:border-b-white-secondary w-5'></span>
+        <span className='block border-b-2 border-b-black dark:border-b-white-secondary w-5'></span>
       </>
     )
   }
@@ -39,7 +39,7 @@ export default function Header() {
           <Hamburger></Hamburger>
         </div>
 
-        <div className='font-bold text-2xl tracking-widest'>
+        <div className='font-bold text-2xl tracking-widest dark:text-white-secondary'>
           <Link href="/">OUTSIDER</Link>
         </div>
 

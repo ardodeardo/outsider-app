@@ -12,7 +12,7 @@ function Category() {
         {
           categories.map(category => {
             return (
-              <li className='text-base' key={category}>
+              <li className='text-base dark:text-white-secondary' key={category}>
                 <Link href={`/category/${category.toLocaleLowerCase()}`}>{category}</Link>
               </li>
             )

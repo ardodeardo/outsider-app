@@ -9,3 +9,11 @@
     @apply mx-auto bg-white;
   }
 }
+
+$headerHeight: 72px;
+$footerHeight: 236px;
+$footerMarginTop: 80px;
+
+main {
+  min-height: calc(100vh - $headerHeight - $footerHeight - $footerMarginTop);
+}

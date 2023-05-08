@@ -2,13 +2,12 @@ import React from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
 
+interface FooterLink {
+  label: string;
+  url: string;
+}
+
 export default function Footer() {
-
-  interface FooterLink {
-    label: string;
-    url: string;
-  }
-
   const backLink: Array<FooterLink> = [
     {
       label: "Log In",
@@ -38,7 +37,7 @@ export default function Footer() {
           <ul className='flex mx-auto gap-x-5'>
             {
               backLink.map((item) => {
-                return <li key={item.label} className="hover:underline underline-offset-4">
+                return <li key={item.label} className="dark:text-white-secondary hover:underline underline-offset-4">
                   <Link href={item.url}>
                     {item.label}
                   </Link>
@@ -47,8 +46,8 @@ export default function Footer() {
             }
           </ul>
           <div className='mx-auto'>
-            <p>Powered By</p>
-            <Link href="https://newsapi.org/" aria-label='News Api'>
+            <p className='dark:text-white-secondary'>Powered By</p>
+            <Link href="https://newsapi.org/" target='_blank' aria-label='News Api'>
               <Image
                 src="/images/newsapi.png"
                 alt="News Api"
@@ -58,7 +57,7 @@ export default function Footer() {
               />
             </Link>
           </div>
-          <p>© 2023 Outsider. Inspired by Insider</p>
+          <p className='dark:text-white-secondary'>© 2023 Outsider. Inspired by Insider</p>
         </div>
       </div>
     </footer>
